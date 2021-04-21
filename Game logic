@@ -1,0 +1,78 @@
+#Project-1_Snakes and Ladders
+
+import random
+
+#Dictionaries for snakes and ladders positions
+ladders = {3:38 ,24:33 ,42:93, 72:84}
+snakes = {17:7, 54:34, 62:19, 98:79}
+
+Player_counter = 1
+Player_move = ""
+Player_manual = 0
+Game_max = 100
+Dice_max = 6
+Dice_value = 0
+P1,P2 = 0,0
+print("##### Welcome to Snakes & Ladders ##### ")
+
+Player1 = input("Enter the name of Player1: ")
+Player2 = input("Enter the name of Player2: ")
+
+print("##### Let us Start #####")
+
+
+def player_switch(P_counter):
+    P1,P2=0,0
+    Player_move =""
+    while(1):
+      if P_counter == 1:
+            Player_move = input(Player1 + ": ")
+            Dv = get_dice_number(Player_move)
+                if Dv == 0:
+                    print(f'{Player1} quits.Congratulations {Player2}, You are the Winner!!')
+                    break
+                else:
+                    if P1 + Dv <= 100:
+                        P1 += Dv
+                    if P1 in snakes:
+                        P1 = snakes.get(P1)
+                    elif P1 in ladders:
+                        P1 = ladders.get(P1)
+                    print(" Your final position is: ", P1)
+                    if P1 + Dv == 100:
+                        print(f'Congratulations {Player1} ,You are the Winner!!')
+                        break
+        P_counter+=1
+        
+        if P_counter ==2:
+            Player_move = input(Player2 + ": ")
+            if Player_move == ": ":
+                            Dv = get_dice_number(Player_move)
+                if Dv == 0:
+                    print(f'{Player1} quits. Congratulations {Player2},You are the Winner!!')
+                    break
+                else:
+                    if P2 + Dv <= 100:
+                        P2 = P2 + Dv
+                    if P2 in snakes:
+                        P2 = snakes.get(P2)
+                    elif P2 in ladders:
+                        P2 = ladders.get(P2)
+                    print(" Your final position is: ", P2)
+                    if P2 + Dv == 100:
+                        print(f'Congratulations {Player2}, You are the Winner!!')
+                        break
+        P_counter -=1
+
+def get_dice_number(P_move):
+        if P_move == "roll":
+            Dice_value = random.randint(1,Dice_max)
+            print(f'You got a {Dice_value}')
+            return Dice_value
+        if P_move == "quit":
+            print("Game over")
+            return 0
+
+
+if __name__=='__main__':
+    player_switch(Player_counter)
